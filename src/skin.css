@@ -1,0 +1,359 @@
+/* ============================================================================
+ * 霜雪大肥鱼 skin — decoration layer
+ * Only viewport-level chrome: the palette itself rides the theme tokens.
+ * ========================================================================== */
+
+.ff-skin {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* warm lamp in the upper-right — the one warm note of the wallpaper */
+.ff-skin .ff-glow {
+  position: absolute;
+  top: -210px;
+  right: -190px;
+  width: 820px;
+  height: 820px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+      rgba(246, 216, 178, 0.24),
+      rgba(246, 216, 178, 0.08) 44%,
+      rgba(246, 216, 178, 0) 70%);
+  animation: ff-lamp 19s ease-in-out infinite alternate;
+  transform-origin: 60% 40%;
+  will-change: transform, opacity;
+}
+body[data-ds-dark-theme] .ff-skin .ff-glow {
+  background: radial-gradient(circle at 50% 50%,
+      rgba(246, 206, 160, 0.18),
+      rgba(246, 206, 160, 0.06) 46%,
+      rgba(246, 206, 160, 0) 72%);
+}
+@keyframes ff-lamp {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+/* 底部一层很淡的冷光，像窗台上积的雪 */
+.ff-skin .ff-sill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 58px;
+  background: linear-gradient(
+    180deg,
+    rgba(150, 190, 220, 0) 0%,
+    rgba(150, 190, 220, 0.04) 58%,
+    rgba(150, 190, 220, 0.09) 100%
+  );
+  filter: blur(6px);
+}
+body[data-ds-dark-theme] .ff-skin .ff-sill {
+  background: linear-gradient(
+    180deg,
+    rgba(190, 215, 235, 0) 0%,
+    rgba(190, 215, 235, 0.03) 58%,
+    rgba(190, 215, 235, 0.07) 100%
+  );
+}
+
+/* frost creeping in from the window edges */
+.ff-skin .ff-frost {
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 0 90px 8px rgba(148, 184, 212, 0.10),
+    inset 0 0 300px 60px rgba(178, 206, 227, 0.07);
+}
+body[data-ds-dark-theme] .ff-skin .ff-frost {
+  box-shadow:
+    inset 0 0 110px 12px rgba(6, 12, 18, 0.40),
+    inset 0 0 320px 70px rgba(10, 18, 26, 0.22);
+}
+
+/* falling snow */
+.ff-skin .ff-flakes {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.ff-skin .ff-flakes i {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%,
+      #ffffff 0%,
+      rgba(238, 247, 255, 0.96) 44%,
+      rgba(198, 222, 242, 0.55) 62%,
+      rgba(198, 222, 242, 0) 78%);
+  box-shadow: 0 0 4px rgba(150, 182, 208, 0.5);
+  opacity: var(--o);
+  animation: ff-fall var(--d) linear var(--delay) infinite;
+  will-change: transform;
+}
+body:not([data-ds-dark-theme]) .ff-skin .ff-flakes i {
+  background: radial-gradient(circle at 38% 34%,
+      #ffffff 0%,
+      rgba(170, 200, 222, 0.96) 42%,
+      rgba(140, 175, 202, 0.5) 60%,
+      rgba(140, 175, 202, 0) 78%);
+  box-shadow: 0 0 3px rgba(110, 148, 178, 0.5);
+}
+body[data-ds-dark-theme] .ff-skin .ff-flakes i {
+  opacity: calc(var(--o) * 0.9);
+}
+
+@keyframes ff-fall {
+  0% {
+    transform: translate3d(0, -12vh, 0) scale(0.85);
+  }
+  50% {
+    transform: translate3d(var(--sway), 50vh, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(0, 112vh, 0) scale(0.9);
+  }
+}
+
+/* ============================================================================
+ * 动效层：极光 / 跟随柔光 / 冷启动的一次扫光
+ * 语言取自「霜雪协议」：冷白、缓慢、克制，不做全屏接管
+ * ========================================================================== */
+
+.ff-skin .ff-aurora {
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  top: -20vh;
+  height: 48vh;
+  background: linear-gradient(
+    100deg,
+    rgba(150, 190, 225, 0) 0%,
+    rgba(150, 190, 225, 0.07) 26%,
+    rgba(236, 206, 168, 0.07) 52%,
+    rgba(150, 190, 225, 0.05) 74%,
+    rgba(150, 190, 225, 0) 100%
+  );
+  filter: blur(52px);
+  animation: ff-aurora 42s ease-in-out infinite alternate;
+  will-change: transform;
+}
+body[data-ds-dark-theme] .ff-skin .ff-aurora {
+  background: linear-gradient(
+    100deg,
+    rgba(120, 170, 215, 0) 0%,
+    rgba(120, 170, 215, 0.09) 26%,
+    rgba(226, 190, 150, 0.06) 52%,
+    rgba(120, 170, 215, 0.08) 74%,
+    rgba(120, 170, 215, 0) 100%
+  );
+}
+@keyframes ff-aurora {
+  0% {
+    transform: translate3d(-3%, 0, 0) scaleY(1);
+  }
+  100% {
+    transform: translate3d(3%, 2%, 0) scaleY(1.14);
+  }
+}
+
+/* 跟着指针走的柔光 */
+.ff-skin .ff-cursor {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    520px circle at var(--mx, 50%) var(--my, 38%),
+    rgba(255, 238, 214, 0.07),
+    rgba(255, 238, 214, 0) 62%
+  );
+}
+body[data-ds-dark-theme] .ff-skin .ff-cursor {
+  background: radial-gradient(
+    560px circle at var(--mx, 50%) var(--my, 38%),
+    rgba(130, 190, 235, 0.1),
+    rgba(130, 190, 235, 0) 62%
+  );
+}
+
+/* 冷启动：一次自上而下的扫光 + 标识，1.5s 后自毁 */
+.ff-skin .ff-boot {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.85s ease;
+}
+.ff-skin.ff-boot-done .ff-boot {
+  opacity: 0;
+}
+.ff-skin .ff-boot-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -28vh;
+  height: 28vh;
+  background: linear-gradient(
+    180deg,
+    rgba(170, 205, 235, 0) 0%,
+    rgba(170, 205, 235, 0.08) 62%,
+    rgba(170, 205, 235, 0.2) 94%,
+    rgba(170, 205, 235, 0) 100%
+  );
+  animation: ff-sweep 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.05s 1 both;
+}
+@keyframes ff-sweep {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(132vh);
+    opacity: 0.35;
+  }
+}
+.ff-skin .ff-boot-cap {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  transform: translate(-50%, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 30px 60px;
+  animation: ff-cap 2s ease both;
+}
+.ff-skin .ff-boot-cap::before {
+  content: "";
+  position: absolute;
+  inset: -40px -90px;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(246, 249, 252, 0.92) 0%,
+    rgba(246, 249, 252, 0.72) 42%,
+    rgba(246, 249, 252, 0) 72%
+  );
+  filter: blur(18px);
+}
+body[data-ds-dark-theme] .ff-skin .ff-boot-cap::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(10, 16, 22, 0.86) 0%,
+    rgba(10, 16, 22, 0.6) 42%,
+    rgba(10, 16, 22, 0) 72%
+  );
+}
+.ff-skin .ff-boot-cap span {
+  font: 11px/1 "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0.44em;
+  color: rgba(70, 100, 125, 0.72);
+}
+.ff-skin .ff-boot-cap b {
+  font: 600 22px/1.2 "Microsoft YaHei UI", "Segoe UI", sans-serif;
+  letter-spacing: 0.34em;
+  color: rgba(32, 52, 72, 0.86);
+}
+.ff-skin .ff-boot-cap i {
+  font: 10px/1 "Segoe UI", system-ui, sans-serif;
+  font-style: normal;
+  letter-spacing: 0.4em;
+  color: rgba(70, 100, 125, 0.52);
+}
+.ff-skin .ff-boot-cap u {
+  margin-top: 10px;
+  font: 9px/1 "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0.28em;
+  text-decoration: none;
+  color: rgba(70, 100, 125, 0.34);
+}
+body[data-ds-dark-theme] .ff-skin .ff-boot-cap u {
+  color: rgba(180, 208, 228, 0.32);
+}
+.ff-skin .ff-boot-cap::after {
+  content: "";
+  width: 168px;
+  height: 1px;
+  margin-top: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(70, 100, 125, 0) 0%,
+    rgba(70, 100, 125, 0.45) 50%,
+    rgba(70, 100, 125, 0) 100%
+  );
+  animation: ff-cap-line 1.8s cubic-bezier(0.2, 0.7, 0.3, 1) 0.15s both;
+}
+@keyframes ff-cap-line {
+  0% {
+    transform: scaleX(0.1);
+    opacity: 0;
+  }
+  40% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0.2;
+  }
+}
+body[data-ds-dark-theme] .ff-skin .ff-boot-cap span,
+body[data-ds-dark-theme] .ff-skin .ff-boot-cap i {
+  color: rgba(180, 208, 228, 0.6);
+}
+body[data-ds-dark-theme] .ff-skin .ff-boot-cap b {
+  color: rgba(232, 244, 253, 0.9);
+}
+@keyframes ff-cap {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  26% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  76% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ff-skin .ff-flakes i,
+  .ff-skin .ff-aurora,
+  .ff-skin .ff-glow,
+  .ff-skin .ff-boot-band,
+  .ff-skin .ff-boot-cap,
+  .ff-skin .ff-boot-cap::after {
+    animation: none;
+  }
+  .ff-skin .ff-flakes {
+    transform: none;
+    transition: none;
+  }
+  .ff-skin .ff-flakes i {
+    transform: translate3d(0, 40vh, 0);
+  }
+}
+

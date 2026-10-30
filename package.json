@@ -1,0 +1,30 @@
+{
+  "name": "dsh-skin-fatfish",
+  "version": "0.1.0",
+  "description": "霜雪大肥鱼 —— 一套安静的冬日 DSH Web GUI 皮肤（霜白 / 雾蓝 / 墨蓝，一点暖灯琥珀）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "client": {
+      "platform": "web"
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "skin",
+    "theme",
+    "deepseek-harness"
+  ],
+  "license": "MIT"
+}
