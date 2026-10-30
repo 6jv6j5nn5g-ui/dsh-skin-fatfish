@@ -7,7 +7,7 @@
 ## 装
 
 ```bash
-dsh plugin --profile <你的profile> add github:<你的GitHub用户名>/dsh-skin-fatfish
+dsh plugin --profile <你的profile> add github:6jv6j5n5g-ui/dsh-skin-fatfish
 ```
 
 装完在侧栏「插件」页打开 `skin-fatfish` 开关，HMR 开着的话立即生效，不用重启。
